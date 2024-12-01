@@ -41,7 +41,7 @@ def main():
     # Team Section
     st.header("Our Team")
 
-    data = pandas.read_csv("data.csv")
+    data = pandas.read_csv("data/team.csv")
     data_count = len(data)
     columns = list(st.columns(column_count))
     sizes = get_column_sizes(data_count, column_count)
