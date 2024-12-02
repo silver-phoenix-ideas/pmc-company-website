@@ -1,3 +1,4 @@
+import streamlit as st
 import smtplib
 import email
 import ssl
@@ -34,10 +35,10 @@ def prepare_email(sender, recipient, topic, message):
 def send_email(sender, topic, message):
     host = config.APP_EMAIL_HOST
     port = config.APP_EMAIL_PORT
-    username = os.getenv("APP_EMAIL_USER")
-    password = os.getenv("APP_EMAIL_PASS")
+    username = st.secrets["APP_EMAIL_USER"]
+    password = st.secrets["APP_EMAIL_PASS"]
     context = ssl.create_default_context()
-    recipient = os.getenv("APP_EMAIL_INBOX")
+    recipient = st.secrets["APP_EMAIL_INBOX"]
 
     email_message = prepare_email(sender, recipient, topic, message)
 
