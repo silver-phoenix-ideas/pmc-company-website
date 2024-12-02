@@ -1,6 +1,12 @@
 import streamlit as st
 
 
+def page_navigation():
+    with st.sidebar:
+        st.page_link('main.py', label='Home')
+        st.page_link('pages/contact.py', label='Contact')
+
+
 def employee_card(employee):
     full_name = employee["first name"] + " " + employee["last name"]
     st.subheader(full_name.title())

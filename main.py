@@ -1,10 +1,12 @@
 # Imports
 import streamlit as st
 import pandas
+import modules.config as config
 import modules.components as components
 
 # Configurations
-st.set_page_config(layout="wide")
+st.set_page_config(layout="wide", page_title="Home | " + config.APP_TITLE)
+components.page_navigation()
 column_count = 3
 
 # About Section
