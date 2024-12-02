@@ -3,6 +3,7 @@ import streamlit as st
 import pandas
 import modules.config as config
 import modules.components as components
+import modules.email_helper as email_helper
 
 # Configurations
 st.set_page_config(layout="wide", page_title="Contact | " + config.APP_TITLE)
@@ -23,6 +24,7 @@ with st.form(key="contact_form"):
 if submit:
     status = st.info("Sending...")
     try:
+        email_helper.send_email(sender, message)
         status.info("Your message was sent successfully.")
     except:
         status.error("Your message could not be sent.")
