@@ -1,62 +1,36 @@
 # Imports
 import streamlit as st
 import pandas
+import modules.components as components
 
+# Configurations
+st.set_page_config(layout="wide")
+column_count = 3
 
-# Functions
-def get_column_sizes(data_count, column_count):
-    quotient = data_count // column_count
-    remainder = data_count % column_count
-    columns = [quotient] * column_count
+# About Section
+st.title("The Best Company")
 
-    if remainder:
-        for index, column in enumerate(columns):
-            if remainder:
-                columns[index] += 1
-                remainder -= 1
+with open("about.txt") as file:
+    about = file.read()
 
-    return columns
+st.text(about)
 
+# Team Section
+st.header("Our Team")
 
-def display_employee(employee):
-    full_name = employee["first name"] + " " + employee["last name"]
-    st.subheader(full_name.title())
-    st.text(employee["role"])
-    st.image("images/" + employee["image"])
+data = pandas.read_csv("data/team.csv")
+data_count = len(data)
+columns = list(st.columns(column_count))
+sizes = components.get_column_sizes(data_count, column_count)
 
+current_index = 0
 
-def main():
-    # Configurations
-    st.set_page_config(layout="wide")
-    column_count = 3
+for i, column in enumerate(columns):
+    start = current_index
+    end = current_index + sizes[i]
 
-    # About Section
-    st.title("The Best Company")
+    with column:
+        for j, row in data[start:end].iterrows():
+            components.employee_card(row)
 
-    with open("about.txt") as file:
-        about = file.read()
-
-    st.text(about)
-
-    # Team Section
-    st.header("Our Team")
-
-    data = pandas.read_csv("data/team.csv")
-    data_count = len(data)
-    columns = list(st.columns(column_count))
-    sizes = get_column_sizes(data_count, column_count)
-
-    current_index = 0
-
-    for i, column in enumerate(columns):
-        start = current_index
-        end = current_index + sizes[i]
-
-        with column:
-            for j, row in data[start:end].iterrows():
-                display_employee(row)
-
-        current_index = end
-
-
-main()
+    current_index = end
